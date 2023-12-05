@@ -1,0 +1,21 @@
+﻿.card-subtitle {
+	color: dimgray;
+}
+
+.card-body-content {
+	color: darkslategray;
+	font-size: 0.9rem;
+}
+
+.card-body-links {
+	& a {
+		&.card-link, &.card-link:visited {
+			color: green !important;
+			font-weight: 400;
+			text-decoration: none;
+			&:hover, &:active {
+				color: orangered !important;
+			}
+		}
+	}
+}

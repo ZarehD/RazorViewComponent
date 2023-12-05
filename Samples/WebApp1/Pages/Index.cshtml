@@ -1,0 +1,61 @@
+﻿@page
+@model IndexModel
+@using Shared.Components
+
+@{
+	ViewData["Title"] = "Home page";
+
+	var imgCard1 = new ImageInfo("/img/card-1-img.jpg") { AltText = "card-1" };
+	var imgCard2 = new ImageInfo("/img/card-2-img.jpg") { AltText = "card-2" };
+}
+
+<div class="text-center">
+	<h1 class="display-4">Welcome</h1>
+	<p class="w-50 mx-auto">
+		Learn about component based web development in ASP.NET Razor Pages with
+		<a href="https://www.github/ZarehD/RazorViewComponent" target="_blank" class="rvc">
+			RazorViewComponent
+		</a>.
+	</p>
+
+	<div class="row row-cols-4 gx-3 text-center justify-content-center mt-4">
+		<div class="col">
+			<bs5-card title="Card 1 Title"
+					  subTitle="Card 1 Sub-Title"
+					  cardImg="@imgCard1">
+				<p>
+					Content for first sample card
+				</p>
+				<card-links>
+					<a href="#" class="card-link">Link 1</a>
+					<a href="#" class="card-link">Link 2</a>
+				</card-links>
+				<card-header>
+					Card 1 Header
+				</card-header>
+				<card-footer>
+					Card 1 Footer
+				</card-footer>
+			</bs5-card>
+		</div>
+		<div class="col">
+			<bs5-card title="Card 2 Title"
+					  subTitle="Card 2 Sub-Title"
+					  cardImg="@imgCard2">
+				<p>
+					Content for second sample card
+				</p>
+				<card-links>
+					<a href="#" class="card-link">Link 3</a>
+					<a href="#" class="card-link">Link 4</a>
+				</card-links>
+				<card-header>
+					Card 2 Header
+				</card-header>
+				<card-footer>
+					Card 2 Footer
+				</card-footer>
+			</bs5-card>
+		</div>
+	</div>
+</div>

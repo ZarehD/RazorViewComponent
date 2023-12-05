@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<WarningsAsErrors></WarningsAsErrors>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<RepositoryUrl>https://www.github/ZarehD/RazorViewComponent</RepositoryUrl>
+		<PackageProjectUrl>https://www.github/ZarehD/RazorViewComponent</PackageProjectUrl>
+		<PackageIcon>Logo.png</PackageIcon>
+		<PackageReadmeFile>Readme.md</PackageReadmeFile>
+		<PackageTags>AspNet;Core;Razor;Partial;View;Component</PackageTags>
+
+		<AssemblyName>RazorViewComponent</AssemblyName>
+		<RootNamespace>RazorViewComponentLib</RootNamespace>
+		<PackageId>RazorViewComponent</PackageId>
+		<Title>RazorViewComponent</Title>
+
+		<Authors>Zareh DerGevorkian</Authors>
+		<Company>Zareh DerGevorkian</Company>
+		<Product>RazorViewComponent</Product>
+		<Copyright>Copyright © 2023 Zareh DerGevorkian. All rights reserved</Copyright>
+		<Description>Component-based UI elements for AspNet Razor.</Description>
+		<Version>1.0.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="ThrowGuard" Version="1.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\Logo.png" Link="Logo.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\Readme.md" Link="Readme.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+</Project>

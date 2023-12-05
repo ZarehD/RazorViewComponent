@@ -1,0 +1,48 @@
+﻿@model BootstrapCard;
+
+@{
+}
+
+<div class="card border-success @Model.CardCss">
+	@if (Model.CardImage is not null)
+	{
+		<img src="@Model.CardImage.Source"
+			 alt="@Model.CardImage.AltText"
+			 class="card-img-top @Model.CardImage.CssClass"
+			 height="200" />
+	}
+	@if (Model.HasHeaderContent())
+	{
+		<div class="card-header">
+			@Model.RenderHeaderContent()
+		</div>
+	}
+	<div class="card-body">
+		@if (Model.CardTitle is not null)
+		{
+			<h5 class="card-title">@Model.CardTitle</h5>
+		}
+		@if (Model.CardSubTitle is not null)
+		{
+			<h6 class="card-subtitle">@Model.CardSubTitle</h6>
+		}
+		@if (Model.HasChildContent())
+		{
+			<div class="card-body-content mt-2">
+				@Model.RenderChildContent()
+			</div>
+		}
+		@if (Model.SlotHasContent(BsCard.Slot.Links))
+		{
+			<div class="card-body-links">
+				@Model.RenderSlot(BsCard.Slot.Links)
+			</div>
+		}
+	</div>
+	@if (Model.HasFooterContent())
+	{
+		<div class="card-footer">
+			@Model.RenderFooterContent()
+		</div>
+	}
+</div>
