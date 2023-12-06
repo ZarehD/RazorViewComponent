@@ -1,0 +1,21 @@
+﻿@model BsAccordionItem
+
+<div class="accordion-item">
+	<h2 class="accordion-header">
+		<button class="accordion-button"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="@($"#{Model.AccordionItemId}")"
+				aria-expanded="true"
+				aria-controls="@Model.AccordionItemId">
+			@Model.RenderHeaderSlot()
+		</button>
+	</h2>
+	<div id="@Model.AccordionItemId"
+		 class="accordion-collapse collapse@(Model.Show ? " show" : string.Empty)"
+		 data-bs-parent="@($"#{Model.ParentAccordionId}")">
+		<div class="accordion-body text-start">
+			@Model.RenderChildContent()
+		</div>
+	</div>
+</div>

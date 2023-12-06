@@ -3,7 +3,7 @@ using RazorViewComponentLib;
 
 namespace WebApp1.Pages.Shared.Components
 {
-	internal class BsCard
+	internal class BsCardNames
 	{
 		public const string Tag = "bs5-card";
 		internal class Slot
@@ -22,7 +22,7 @@ namespace WebApp1.Pages.Shared.Components
 	}
 
 
-	[HtmlTargetElement(BsCard.Tag)]
+	[HtmlTargetElement(BsCardNames.Tag)]
 	public class BootstrapCard : RazorViewComponent
 	{
 		[HtmlAttributeName("title")]
@@ -39,21 +39,21 @@ namespace WebApp1.Pages.Shared.Components
 
 
 		// Convenience methods...
-		public bool HasHeaderContent() => SlotHasContent(BsCard.Slot.Header);
-		public bool HasFooterContent() => SlotHasContent(BsCard.Slot.Footer);
-		public TagHelperContent RenderHeaderContent() => RenderSlot(BsCard.Slot.Header);
-		public TagHelperContent RenderFooterContent() => RenderSlot(BsCard.Slot.Footer);
+		public bool HasHeaderSlot() => HasSlot(BsCardNames.Slot.Header);
+		public bool HasFooterSlot() => HasSlot(BsCardNames.Slot.Footer);
+		public TagHelperContent RenderHeaderSlot() => RenderSlot(BsCardNames.Slot.Header);
+		public TagHelperContent RenderFooterSlot() => RenderSlot(BsCardNames.Slot.Footer);
 	}
 
 
-	[HtmlTargetElement(BsCard.Slot.Header)]
+	[HtmlTargetElement(BsCardNames.Slot.Header)]
 	public class BootstrapCardHeader : AutoNamedSlotComponent { }
 
 
-	[HtmlTargetElement(BsCard.Slot.Footer)]
+	[HtmlTargetElement(BsCardNames.Slot.Footer)]
 	public class BootstrapCardFooter : AutoNamedSlotComponent { }
 
 
-	[HtmlTargetElement(BsCard.Slot.Links)]
+	[HtmlTargetElement(BsCardNames.Slot.Links)]
 	public class BootstrapCardLinks : AutoNamedSlotComponent { }
 }

@@ -11,13 +11,13 @@
 			 class="card-img-top @Model.CardImage.CssClass"
 			 height="200" />
 	}
-	@if (Model.HasHeaderContent())
+	@if (Model.HasHeaderSlot())
 	{
 		<div class="card-header">
-			@Model.RenderHeaderContent()
+			@Model.RenderHeaderSlot()
 		</div>
 	}
-	<div class="card-body">
+	<div class="card-body p-2">
 		@if (Model.CardTitle is not null)
 		{
 			<h5 class="card-title">@Model.CardTitle</h5>
@@ -32,17 +32,17 @@
 				@Model.RenderChildContent()
 			</div>
 		}
-		@if (Model.SlotHasContent(BsCard.Slot.Links))
+		@if (Model.HasSlot(BsCardNames.Slot.Links))
 		{
-			<div class="card-body-links">
-				@Model.RenderSlot(BsCard.Slot.Links)
+			<div class="card-body-links mt-2">
+				@Model.RenderSlot(BsCardNames.Slot.Links)
 			</div>
 		}
 	</div>
-	@if (Model.HasFooterContent())
+	@if (Model.HasFooterSlot())
 	{
 		<div class="card-footer">
-			@Model.RenderFooterContent()
+			@Model.RenderFooterSlot()
 		</div>
 	}
 </div>

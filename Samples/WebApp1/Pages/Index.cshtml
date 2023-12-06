@@ -18,14 +18,13 @@
 		</a>.
 	</p>
 
-	<div class="row row-cols-4 gx-3 text-center justify-content-center mt-4">
+	<h5 class="mt-3 mb-2">Bootstrap Card component:</h5>
+	<div class="row row-cols-2 row-cols-lg-4 gx-3 text-center justify-content-center">
 		<div class="col">
 			<bs5-card title="Card 1 Title"
 					  subTitle="Card 1 Sub-Title"
 					  cardImg="@imgCard1">
-				<p>
-					Content for first sample card
-				</p>
+				<div>Content for first sample card</div>
 				<card-links>
 					<a href="#" class="card-link">Link 1</a>
 					<a href="#" class="card-link">Link 2</a>
@@ -42,9 +41,7 @@
 			<bs5-card title="Card 2 Title"
 					  subTitle="Card 2 Sub-Title"
 					  cardImg="@imgCard2">
-				<p>
-					Content for second sample card
-				</p>
+				<div>Content for second sample card</div>
 				<card-links>
 					<a href="#" class="card-link">Link 3</a>
 					<a href="#" class="card-link">Link 4</a>
@@ -58,4 +55,37 @@
 			</bs5-card>
 		</div>
 	</div>
+
+	<h5 class="mt-3 mb-2">Bootstrap Accordion component:</h5>
+	<div class="row justify-content-center">
+		<div class="col-12 col-lg-6">
+			<bs-accordion>
+				<bs-accordion-item show="true">
+					<accordion-header>
+						<span>Accordion Item 1</span>
+					</accordion-header>
+					<strong>This is the first item's accordion body.</strong>
+					It is shown by default, until the collapse plugin adds the appropriate
+					classes that we use to style each element. These classes control
+					the overall appearance, as well as the showing and hiding via CSS
+					transitions. You can modify any of this with custom CSS or overriding
+					our default variables. It's also worth noting that just about any HTML
+					can go within the <code>.accordion-body</code>, though the transition
+					does limit overflow.
+				</bs-accordion-item>
+				<bs-accordion-item>
+					<accordion-header>
+						<span>Accordion Item 2</span>
+					</accordion-header>
+					<strong>This is the second item's accordion body.</strong> It is hidden by default,
+					until the collapse plugin adds the appropriate classes that we use to style each
+					element. These classes control the overall appearance, as well as the showing and
+					hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+					our default variables. It's also worth noting that just about any HTML can go within
+					the <code>.accordion-body</code>, though the transition does limit overflow.
+				</bs-accordion-item>
+			</bs-accordion>
+		</div>
+	</div>
+
 </div>

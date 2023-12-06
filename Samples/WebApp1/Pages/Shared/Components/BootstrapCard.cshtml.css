@@ -1,4 +1,9 @@
-﻿.card-subtitle {
+﻿
+.card-title {
+	font-size: 1.2rem;
+}
+
+.card-subtitle {
 	color: dimgray;
 }
 
