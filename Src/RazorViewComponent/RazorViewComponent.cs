@@ -8,7 +8,8 @@ namespace RazorViewComponentLib
 {
 	public abstract class RazorViewComponent : TagHelper
 	{
-		protected static readonly string _componentStackKey = $"{nameof(RazorViewComponent)}:Stack";
+		private static readonly string _componentStackKey = $"{nameof(RazorViewComponent)}:Stack";
+		protected static readonly TagHelperContent DefaultContent = new DefaultTagHelperContent();
 
 		protected readonly RazorViewComponentOptions PartialViewComponentOptions;
 
@@ -25,8 +26,12 @@ namespace RazorViewComponentLib
 		protected TagHelperContent? ChildContent { get; set; }
 
 		[HtmlAttributeNotBound]
-		protected Dictionary<string, TagHelperContent> NamedSlots { get; set; } = new();
-
+		protected Dictionary<string, TagHelperContent> NamedSlots { get; set; } =
+#if NET8_0_OR_GREATER
+			[];
+#else
+			new();
+#endif
 
 		public RazorViewComponent(
 			IOptions<RazorViewComponentOptions>? optionsAccessor = default)
@@ -51,7 +56,7 @@ namespace RazorViewComponentLib
 		{
 			if (context.Items.ContainsKey(_componentStackKey))
 			{
-				var parentComponentStack = GetParentComponentStack(context);
+				var parentComponentStack = GetComponentStack(context);
 				this.ParentComponent = parentComponentStack.Peek();
 				if (this is not RazorViewComponentSlot)
 				{
@@ -63,33 +68,48 @@ namespace RazorViewComponentLib
 				var parentComponentStack = new Stack<RazorViewComponent>();
 				this.ParentComponent = null;
 				parentComponentStack.Push(this);
-				SetParentComponentStack(context, parentComponentStack);
+				SetComponentStack(context, parentComponentStack);
 			}
 
 			base.Init(context);
 		}
 
-		private static Stack<RazorViewComponent> GetParentComponentStack(TagHelperContext context) =>
+		protected static RazorViewComponent? FindParentComponent(TagHelperContext context, Type parentComponentType)
+		{
+			var componentStack = GetComponentStack(context);
+			// NOTE: first element (index 0) in stack is the current component instance.
+			if (componentStack.Count < 2) return null;
+			RazorViewComponent? result = null;
+			for (var i = 1; i < componentStack.Count; i++)
+			{
+				if (componentStack.ElementAt(i).GetType() == parentComponentType)
+				{
+					result = componentStack.ElementAt(i);
+					break;
+				}
+			}
+			return result;
+		}
+
+		private static Stack<RazorViewComponent> GetComponentStack(TagHelperContext context) =>
 			(context.Items[_componentStackKey] as Stack<RazorViewComponent>)!;
 
-		private static void SetParentComponentStack(TagHelperContext context, Stack<RazorViewComponent> parentComponentStack) =>
+		private static void SetComponentStack(TagHelperContext context, Stack<RazorViewComponent> parentComponentStack) =>
 			Throw.IfNull(context).Items[_componentStackKey] =
 			Throw.IfNull(parentComponentStack);
 
 		public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
 		{
+			Throw.IfNull(context);
+			Throw.IfNull(output);
+
 			Throw.IfNull(this.ViewContext,
 				ex: _ => new InvalidOperationException(
 					UiSafeMessages.Err_NoViewContext));
-			Throw.IfNullOrWhitespace(this.PartialViewPathname);
 
-			await RenderPartialView(output, this.PartialViewPathname);
-		}
-
-		protected async Task RenderPartialView(TagHelperOutput output, string viewPathname)
-		{
-			Throw.IfNull(output);
-			Throw.IfNullOrWhitespace(viewPathname);
+			Throw.IfNullOrWhitespace(this.PartialViewPathname,
+				ex: _ => new InvalidOperationException(
+					UiSafeMessages.Err_BadPartialViewName));
 
 			var childContent = await output.GetChildContentAsync();
 
@@ -105,10 +125,11 @@ namespace RazorViewComponentLib
 				UiSafeMessages.GetUnableToAcquireInstance(
 					nameof(IHtmlHelper))));
 
-			var content = await htmlHelper.PartialAsync(viewPathname, this);
+			var content = await htmlHelper.PartialAsync(this.PartialViewPathname, this);
 
 			output.Content.SetHtmlContent(content);
 			output.TagName = string.Empty;
+			output.TagMode = TagMode.StartTagAndEndTag;
 		}
 
 		protected IHtmlHelper GetHtmlHelper()
@@ -148,25 +169,18 @@ namespace RazorViewComponentLib
 			(this.ChildContent is not null) &&
 			!this.ChildContent.IsEmptyOrWhiteSpace;
 
-		public bool SlotHasContent(string slotName) =>
-			this.NamedSlots.ContainsKey(Throw.IfNullOrWhitespace(slotName)) &&
-			(this.NamedSlots[slotName] is not null) &&
-			!this.NamedSlots[slotName].IsEmptyOrWhiteSpace;
+		public bool HasSlot(string slotName) =>
+			this.NamedSlots.ContainsKey(Throw.IfNullOrWhitespace(slotName))
+			&& (this.NamedSlots[slotName] is not null)
+			//&& !this.NamedSlots[slotName].IsEmptyOrWhiteSpace
+			;
 
 		public TagHelperContent RenderChildContent() =>
-			this.ChildContent ?? new DefaultTagHelperContent();
+			this.ChildContent ?? DefaultContent;
 
-		public TagHelperContent RenderSlot(string slotName)
-		{
-			Throw.IfNullOrWhitespace(slotName);
-
-			if (!this.NamedSlots.TryGetValue(slotName, out var slot))
-			{
-				Throw.InvalidOp(UiSafeMessages.GetSlotIsNotDefined(slotName));
-			}
-
-			return slot;
-		}
+		public TagHelperContent RenderSlot(string slotName) =>
+			this.NamedSlots.TryGetValue(Throw.IfNullOrWhitespace(slotName),
+				out var slot) ? slot : DefaultContent;
 
 
 
@@ -176,6 +190,7 @@ namespace RazorViewComponentLib
 		{
 			public static readonly string Err_NoViewContext = SR.Err_NoViewContext;
 
+			public static readonly string Err_BadPartialViewName = SR.Err_InvalidPartialViewPathname;
 
 			public static string GetUnableToAcquireInstance(string objectTypeName) =>
 				SR.Msg_UnableToAcquireInstance_Fmt.SF(objectTypeName);

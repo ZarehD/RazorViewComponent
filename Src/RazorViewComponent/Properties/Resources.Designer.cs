@@ -79,6 +79,15 @@ namespace RazorViewComponentLib.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The partial view pathname is null, empty, or whitespace..
+        /// </summary>
+        internal static string Err_InvalidPartialViewPathname {
+            get {
+                return ResourceManager.GetString("Err_InvalidPartialViewPathname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slot class ({0}) is not decorated with the[HtmlTargetElementAttribute attribute..
         /// </summary>
         internal static string Err_MissingHtmlTargetElement_Fmt {

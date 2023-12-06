@@ -125,6 +125,9 @@
     <value>Failed to add content of slot ({0}) to parent component.</value>
     <comment>0: slot-name</comment>
   </data>
+  <data name="Err_InvalidPartialViewPathname" xml:space="preserve">
+    <value>The partial view pathname is null, empty, or whitespace.</value>
+  </data>
   <data name="Err_MissingHtmlTargetElementName_Fmt" xml:space="preserve">
     <value>Missing target element tag name in HtmlTargetElementAttribute attribute applied to slot class ({0}).</value>
     <comment>0: type-name</comment>
