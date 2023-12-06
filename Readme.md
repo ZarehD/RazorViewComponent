@@ -4,11 +4,13 @@
 
 ## What is it?
 
-RazorViewComponent is a mashup of existing ASP.NET technologies that makes it very easy to create and use UI components in your __Razor Pages__ projects.
+RazorViewComponent is a mashup of ASP.NET's TagHelper and partial pages technologies that makes it very easy to create and use UI components in your __Razor Pages__ projects.
 
 <br>
 
-Here is a sample of what it lets you do:
+Here is a sample of what it lets you do.
+
+> There are more samples available in the repository.
 
 ```HTML
 <!-- /Pages/Index.cshtml -->
@@ -166,23 +168,3 @@ services.Configure<RazorViewComponentOptions>(
 > __IMPORTANT__: In all cases, the folder containing component view files must be a subfolder under the root folder (*or the root folder itself*) where ASP.NET will search for view files (i.e. `/Pages`, by default).
 
 
-
-## Limitations
-
-`RazorViewComponent` currently has the following limitations:
-- Slots with no content will throw an exception. This is a pretty easy fix, but I'm not sure if it's something that should actually be allowed. I'm leaning toward yes, allow it!
-  ```HTML
-  <my-component>
-	<my-slot>
-	</my-slot>
-  </my-component>
-  ```
-- Supports only one instance of a named slot in a component &mdash; you cannot declare the same slot more than once. This can certainly be addressed with a bit of work, but it's still under review/consideration as to whether it's useful in a practical sense.
-  ```HTML
-  <my-component>
-	<!-- this is fine -->
-	<my-slot>...</my-slot>
-	<!-- this will throw an exception -->
-	<my-slot>...</my-slot>
-  </my-component>
-  ```
