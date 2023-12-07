@@ -1,0 +1,44 @@
+﻿@model BsCarousel
+
+@{
+	var attrRideMode = Model.RideMode == CarouselRideMode.None
+		? string.Empty
+		: $"data-bs-ride={Model.RideMode.ToString().ToLower()}";
+
+	const string attsActiveIndicator = $"class=active aria-current=true ";
+
+	string getActiveIndicatorAtts(int idx) =>
+		idx == Model.ActiveImageItemNum
+		? attsActiveIndicator
+		: string.Empty;
+}
+
+<div id="@Model.CarouselId" class="carousel slide" @attrRideMode>
+	<div class="carousel-inner">
+		@Model.RenderChildContent()
+	</div>
+	@if (!Model.HideControls)
+	{
+		<button class="carousel-control-prev" type="button" data-bs-target="#@Model.CarouselId" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#@Model.CarouselId" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	}
+	@if (Model.ShowIndicators && Model.HasImageItems)
+	{
+		<div class="carousel-indicators">
+			@for (var i = 0; i < Model.ImageItemCount; i++)
+			{
+				<button type="button"
+						data-bs-target="#@Model.CarouselId"
+						data-bs-slide-to="@i"
+						aria-label="Slide @(i + 1)"
+						@getActiveIndicatorAtts(i) />
+			}
+		</div>
+	}
+</div>

@@ -1,0 +1,14 @@
+﻿@model BsCarouselItem
+
+<div class="carousel-item@(Model.IsActive ? " active" : string.Empty)" data-bs-interval="@Model.Interval">
+	<img src="@Model.ImageInfo.Source"
+		 alt="@Model.ImageInfo.AltText"
+		 height="@Model.ImageHeight"
+		 class="d-block w-100" />
+	@if (Model.HasCaptionSlot())
+	{
+		<div class="carousel-caption d-none d-md-block">
+			@Model.RenderCaptionSlot()
+		</div>
+	}
+</div>

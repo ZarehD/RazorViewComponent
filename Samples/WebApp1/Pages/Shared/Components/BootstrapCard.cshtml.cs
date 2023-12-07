@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
-using RazorViewComponentLib;
 
 namespace WebApp1.Pages.Shared.Components
 {
@@ -12,13 +11,6 @@ namespace WebApp1.Pages.Shared.Components
 			public const string Footer = "card-footer";
 			public const string Links = "card-links";
 		}
-	}
-
-	public class ImageInfo(string source)
-	{
-		public string Source { get; set; } = source;
-		public string? AltText { get; set; }
-		public string? CssClass { get; set; }
 	}
 
 
