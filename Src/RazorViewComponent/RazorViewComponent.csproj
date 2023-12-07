@@ -31,7 +31,7 @@
 		<Product>RazorViewComponent</Product>
 		<Copyright>Copyright © 2023 Zareh DerGevorkian. All rights reserved</Copyright>
 		<Description>Component-based UI elements for AspNet Razor.</Description>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
