@@ -167,6 +167,13 @@ services.Configure<RazorViewComponentOptions>(
 
 > __IMPORTANT__: In all cases, the folder containing component view files must be a subfolder under the root folder (*or the root folder itself*) where ASP.NET will search for view files (i.e. `/Pages`, by default).
 
-<br>
 
-#### If you like this project or find it useful, please give it a star. Thank you.
+<br/>
+
+## License
+
+[Apache 2.0](https://github.com/ZarehD/RazorViewComponent/blob/master/LICENSE)
+
+<br/>
+
+If you like this project, or find it useful, please give it a star. Thank you.
