@@ -4,7 +4,7 @@
 
 ## What is it?
 
-RazorViewComponent is a mashup of ASP.NET's TagHelper and partial pages technologies that makes it very easy to create and use UI components in your __Razor Pages__ projects.
+RazorViewComponent is a mashup of ASP.NET's TagHelper and Partial Views technologies that makes it very easy to create and use UI components in your __Razor Pages__ projects.
 
 <br>
 
