@@ -115,6 +115,15 @@ namespace RazorViewComponentLib.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatal: Component stack not available..
+        /// </summary>
+        internal static string Err_NoComponentStack {
+            get {
+                return ResourceManager.GetString("Err_NoComponentStack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A ViewContext was not available for this operation..
         /// </summary>
         internal static string Err_NoViewContext {

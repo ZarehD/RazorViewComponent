@@ -74,7 +74,7 @@ namespace RazorViewComponentLib
 			base.Init(context);
 		}
 
-		protected static RazorViewComponent? FindParentComponent(TagHelperContext context, Type parentComponentType)
+		protected static RazorViewComponent? FindFirstParentOfType(TagHelperContext context, Type parentComponentType)
 		{
 			var componentStack = GetComponentStack(context);
 			// NOTE: first element (index 0) in stack is the current component instance.
@@ -91,14 +91,30 @@ namespace RazorViewComponentLib
 			return result;
 		}
 
+		protected static IEnumerable<RazorViewComponent>? GetComponentsOfType(TagHelperContext context, Type componentType)
+		{
+			Throw.IfNull(context);
+			Throw.IfNull(componentType);
+
+			return GetComponentStack(context).Where(c => c.GetType() == componentType);
+		}
+
 		private static Stack<RazorViewComponent> GetComponentStack(TagHelperContext context) =>
-			(context.Items[_componentStackKey] as Stack<RazorViewComponent>)!;
+			(Throw.IfNull(context).Items[_componentStackKey] as Stack<RazorViewComponent>) ??
+			new InvalidOperationException(UiSafeMessages.Err_NoComponentStack).Throw<Stack<RazorViewComponent>>();
 
 		private static void SetComponentStack(TagHelperContext context, Stack<RazorViewComponent> parentComponentStack) =>
 			Throw.IfNull(context).Items[_componentStackKey] =
 			Throw.IfNull(parentComponentStack);
 
 		public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+		{
+			ValidateProcessInputs(context, output);
+			await ProcessChildContentAsync(output);
+			await ProcessComponentViewAsync(output);
+		}
+
+		private void ValidateProcessInputs(TagHelperContext context, TagHelperOutput output)
 		{
 			Throw.IfNull(context);
 			Throw.IfNull(output);
@@ -110,14 +126,20 @@ namespace RazorViewComponentLib
 			Throw.IfNullOrWhitespace(this.PartialViewPathname,
 				ex: _ => new InvalidOperationException(
 					UiSafeMessages.Err_BadPartialViewName));
+		}
 
+		protected virtual async Task ProcessChildContentAsync(TagHelperOutput output)
+		{
 			var childContent = await output.GetChildContentAsync();
 
 			if (childContent is not null)
 			{
 				this.ChildContent = childContent;
 			}
+		}
 
+		protected virtual async Task ProcessComponentViewAsync(TagHelperOutput output)
+		{
 			var htmlHelper = GetHtmlHelper();
 
 			Throw.IfNull(htmlHelper,
@@ -188,6 +210,8 @@ namespace RazorViewComponentLib
 
 		private static class UiSafeMessages
 		{
+			public static readonly string Err_NoComponentStack = SR.Err_NoComponentStack;
+
 			public static readonly string Err_NoViewContext = SR.Err_NoViewContext;
 
 			public static readonly string Err_BadPartialViewName = SR.Err_InvalidPartialViewPathname;

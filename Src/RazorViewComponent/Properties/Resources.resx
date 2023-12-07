@@ -140,6 +140,9 @@
     <value>Value not specified for required attribute, '{0}'.</value>
     <comment>0: attribute-name</comment>
   </data>
+  <data name="Err_NoComponentStack" xml:space="preserve">
+    <value>Fatal: Component stack not available.</value>
+  </data>
   <data name="Err_NoViewContext" xml:space="preserve">
     <value>A ViewContext was not available for this operation.</value>
   </data>
