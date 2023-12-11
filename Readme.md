@@ -1,4 +1,5 @@
-﻿<img src="Logo.png" alt="project icon" />
+<style>html { tab-size: 4; }</style>
+<img src="Logo.png" alt="project icon" />
 
 # RazorViewComponent
 
